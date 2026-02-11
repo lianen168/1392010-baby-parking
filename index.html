@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1392010.baby - 一生就爱你一个</title>
+    <style>
+        :root {
+            --primary-color: #ff6b81;
+            --secondary-color: #5352ed;
+            --bg-color: #0f0c29;
+            --text-color: #ffffff;
+            --card-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: var(--text-color);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* 动态背景星空 */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 头部样式 */
+        header {
+            text-align: center;
+            padding: 4rem 1rem 2rem;
+            z-index: 10;
+        }
+
+        .domain-name {
+            font-size: 4rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* 1392010 动态效果：霓虹脉冲 + 科技感 */
+        .part-number {
+            color: #fff;
+            text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color), 0 0 40px var(--secondary-color);
+            animation: pulse-glow 2s infinite alternate;
+            position: relative;
+        }
+        
+        @keyframes pulse-glow {
+            0% { text-shadow: 0 0 10px var(--secondary-color), 0 0 20px var(--secondary-color); transform: scale(1); }
+            100% { text-shadow: 0 0 20px #ff00de, 0 0 40px #ff00de, 0 0 60px #ff00de; transform: scale(1.02); }
+        }
+
+        /* .baby 动态效果：Q弹流动 + 温柔感 */
+        .part-suffix {
+            background: linear-gradient(to right, #ff9a9e, #fecfef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif; /* 更圆润的字体 */
+            animation: bounce-liquid 3s infinite ease-in-out;
+            font-style: italic;
+        }
+
+        @keyframes bounce-liquid {
+            0%, 100% { transform: translateY(0) skewX(0); }
+            50% { transform: translateY(-10px) skewX(-5deg); }
+        }
+
+        .slogan {
+            font-size: 1.5rem;
+            margin-top: 1rem;
+            font-weight: 300;
+            opacity: 0.9;
+            background: linear-gradient(to right, #fff, #a1c4fd);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* 可视化区域 */
+        .visual-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        canvas#heart-canvas {
+            position: absolute;
+        }
+
+        .visual-text {
+            position: absolute;
+            z-index: 5;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            bottom: 20px;
+        }
+
+        /* 六大领域卡片 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, background 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .feature-desc {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #ddd;
+        }
+
+        /* 购买区域 */
+        .buy-section {
+            text-align: center;
+            margin: 40px 0 60px;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.2);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .price-tag {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #fff;
+            display: block;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 107, 129, 0.5);
+        }
+
+        .buy-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b81, #ff4757);
+            color: white;
+            font-size: 1.5rem;
+            padding: 15px 50px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 10px 20px rgba(255, 71, 87, 0.4);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 71, 87, 0.6);
+        }
+
+        .buy-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .buy-btn:hover::after {
+            left: 100%;
+        }
+
+        /* 底部联系 */
+        footer {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .contact-email {
+            font-size: 1.1rem;
+            color: #a1c4fd;
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 1px dashed rgba(161, 196, 253, 0.5);
+            border-radius: 10px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .contact-email:hover {
+            background: rgba(161, 196, 253, 0.1);
+            color: #fff;
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2ecc71;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            .domain-name { font-size: 2.5rem; }
+            .visual-container { height: 250px; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stars-container"></div>
+
+    <header>
+        <div class="domain-name">
+            <span class="part-number">1392010</span>
+            <span class="part-suffix">.baby</span>
+        </div>
+        <p class="slogan">一生就爱你一个 · 唯爱与家庭不可辜负</p>
+    </header>
+
+    <div class="visual-container">
+        <canvas id="heart-canvas"></canvas>
+        <div class="visual-text">✨ 恋人牵手 · 数字流淌 ✨</div>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">💍</span>
+            <div class="feature-title">数字求婚誓言</div>
+            <div class="feature-desc">将“1392010”作为不可篡改的区块链式誓言，打造只属于你们的求婚纪念页，永久铭刻“一生就爱你一个”。</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🍼</span>
+            <div class="feature-title">新生儿数字档案</div>
+            <div class="feature-desc">.baby 后缀不仅是宝贝，更是挚爱。为新生命建立第一个成长时光胶囊，记录从出生到成人的每一个瞬间。</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">💌</span>
+            <div class="feature-title">远程恋爱纽带</div>
+            <div class="feature-desc">在这个域名下搭建私密博客或相册，成为异地恋人跨越时空的牵手之地，数据流淌之处即是家。</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🏡</span>
+            <div class="feature-title">家庭传承信托</div>
+            <div class="feature-desc">数字资产是未来的传家宝。持有此顶级数字资产，象征家族情感与财富的代代相传与永续增值。</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🎨</span>
+            <div class="feature-title">情感 NFT 展馆</div>
+            <div class="feature-desc">完美的 Web3 入口，用于展示家庭或情侣的专属 NFT 艺术品，定义元宇宙中的爱巢坐标。</div>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🎁</span>
+            <div class="feature-title">极致纪念日礼物</div>
+            <div class="feature-desc">超越钻石的独特礼物。100美金的投入，蕴含着无价的“一生一世”承诺，是结婚纪念日的完美惊喜。</div>
+        </div>
+    </div>
+
+    <section class="buy-section">
+        <div class="price-tag">$100 USD</div>
+        <button class="buy-btn" onclick="openPurchase()">立即购买此真爱域名</button>
+        <p style="margin-top: 15px; color: #888; font-size: 0.9rem;">安全交易 · 即刻过户 · Spaceship 托管</p>
+    </section>
+
+    <footer>
+        <p>如有疑问或洽谈合作，请点击下方邮箱：</p>
+        <div class="contact-email" onclick="copyEmail()">
+            joshua369x@gmail.com
+            <span class="tooltip" id="copy-tooltip">✅ 已复制</span>
+        </div>
+    </footer>
+
+    <script>
+        // 1. 购买链接多开逻辑
+        function openPurchase() {
+            window.open('https://www.spaceship.com/s/buy/1392010.baby/OwWlsSK9TV9qtsBZ', '_blank');
+        }
+
+        // 2. 邮箱复制逻辑
+        function copyEmail() {
+            const email = 'joshua369x@gmail.com';
+            navigator.clipboard.writeText(email).then(() => {
+                const tooltip = document.getElementById('copy-tooltip');
+                tooltip.classList.add('show');
+                setTimeout(() => {
+                    tooltip.classList.remove('show');
+                }, 2000);
+            }).catch(err => {
+                console.error('无法复制文本: ', err);
+            });
+        }
+
+        // 3. "恋人牵手" 粒子流动可视化效果
+        const canvas = document.getElementById('heart-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = canvas.width = document.querySelector('.visual-container').offsetWidth;
+            height = canvas.height = document.querySelector('.visual-container').offsetHeight;
+        }
+        
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1; // 缓慢流动
+                this.vy = (Math.random() - 0.5) * 1;
+                this.size = Math.random() * 2 + 1;
+                this.alpha = Math.random() * 0.5 + 0.1;
+                // 50%概率是数字，50%概率是心形
+                this.text = Math.random() > 0.5 ? (Math.random() > 0.5 ? '1' : '0') : '❤';
+                this.targetX = width / 2;
+                this.targetY = height / 2;
+            }
+
+            update() {
+                // 简单的吸引力场，模拟牵手/汇聚
+                const dx = this.targetX - this.x;
+                const dy = this.targetY - this.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                
+                // 形成双中心引力场（模拟两个人）
+                const time = Date.now() * 0.001;
+                const center1X = width/2 - 50;
+                const center2X = width/2 + 50;
+                
+                // 粒子在中场流动
+                this.x += this.vx + Math.sin(this.y * 0.05 + time) * 0.5;
+                this.y += this.vy;
+
+                // 边界检查
+                if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.text === '❤' ? `rgba(255, 107, 129, ${this.alpha})` : `rgba(83, 82, 237, ${this.alpha})`;
+                ctx.font = `${this.size * 5}px Arial`;
+                ctx.fillText(this.text, this.x, this.y);
+            }
+        }
+
+        // 初始化粒子
+        for(let i=0; i<150; i++) {
+            particles.push(new Particle());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // 绘制连接线，模拟牵手的纽带
+            ctx.beginPath();
+            ctx.moveTo(width/2 - 60, height/2);
+            ctx.bezierCurveTo(width/2 - 20, height/2 - 40, width/2 + 20, height/2 + 40, width/2 + 60, height/2);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    </script>
+</body>
+</html>
