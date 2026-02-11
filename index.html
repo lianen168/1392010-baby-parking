@@ -123,13 +123,14 @@
             bottom: 20px;
         }
 
-        /* 六大领域卡片 */
+        /* 八大领域卡片布局调整 */
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            /* 调整列宽以适应4列布局，保持对称 */
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 20px;
-            max-width: 1200px;
-            width: 90%;
+            max-width: 1300px; /* 加宽容器以容纳更多卡片 */
+            width: 95%;
             margin: 40px auto;
         }
 
@@ -141,6 +142,10 @@
             text-align: center;
             transition: transform 0.3s, background 0.3s;
             backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
         }
 
         .feature-card:hover {
@@ -160,6 +165,7 @@
             font-weight: bold;
             margin-bottom: 10px;
             color: var(--primary-color);
+            min-height: 1.5em; /* 确保标题对齐 */
         }
 
         .feature-desc {
@@ -239,6 +245,7 @@
             border-radius: 10px;
             transition: all 0.3s;
             position: relative;
+            display: inline-block;
         }
 
         .contact-email:hover {
@@ -259,6 +266,7 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            white-space: nowrap;
         }
 
         .tooltip.show {
@@ -291,35 +299,53 @@
     </div>
 
     <div class="features-grid">
+        <!-- 1. 求婚誓言 -->
         <div class="feature-card">
             <span class="feature-icon">💍</span>
             <div class="feature-title">数字求婚誓言</div>
             <div class="feature-desc">将“1392010”作为不可篡改的区块链式誓言，打造只属于你们的求婚纪念页，永久铭刻“一生就爱你一个”。</div>
         </div>
+        <!-- 2. 新生儿档案 -->
         <div class="feature-card">
             <span class="feature-icon">🍼</span>
             <div class="feature-title">新生儿数字档案</div>
             <div class="feature-desc">.baby 后缀不仅是宝贝，更是挚爱。为新生命建立第一个成长时光胶囊，记录从出生到成人的每一个瞬间。</div>
         </div>
+        <!-- 3. 远程恋爱 -->
         <div class="feature-card">
             <span class="feature-icon">💌</span>
             <div class="feature-title">远程恋爱纽带</div>
             <div class="feature-desc">在这个域名下搭建私密博客或相册，成为异地恋人跨越时空的牵手之地，数据流淌之处即是家。</div>
         </div>
+        <!-- 4. 家庭信托 -->
         <div class="feature-card">
             <span class="feature-icon">🏡</span>
             <div class="feature-title">家庭传承信托</div>
             <div class="feature-desc">数字资产是未来的传家宝。持有此顶级数字资产，象征家族情感与财富的代代相传与永续增值。</div>
         </div>
+        <!-- 5. NFT 展馆 -->
         <div class="feature-card">
             <span class="feature-icon">🎨</span>
             <div class="feature-title">情感 NFT 展馆</div>
             <div class="feature-desc">完美的 Web3 入口，用于展示家庭或情侣的专属 NFT 艺术品，定义元宇宙中的爱巢坐标。</div>
         </div>
+        <!-- 6. 纪念日礼物 -->
         <div class="feature-card">
             <span class="feature-icon">🎁</span>
             <div class="feature-title">极致纪念日礼物</div>
             <div class="feature-desc">超越钻石的独特礼物。100美金的投入，蕴含着无价的“一生一世”承诺，是结婚纪念日的完美惊喜。</div>
+        </div>
+        <!-- 7. 新增：云端时光胶囊 -->
+        <div class="feature-card">
+            <span class="feature-icon">⏳</span>
+            <div class="feature-title">云端时光胶囊</div>
+            <div class="feature-desc">利用“一生”的时间维度，封存今日的影像与书信，设定在未来特定时刻（如孩子成年）开启，让爱穿越时空。</div>
+        </div>
+        <!-- 8. 新增：AI 家族守护灵 -->
+        <div class="feature-card">
+            <span class="feature-icon">🤖</span>
+            <div class="feature-title">AI 家族守护灵</div>
+            <div class="feature-desc">以此域名为入口，部署专属的家庭 AI 代理，记录家族智慧与生活点滴，打造永不失联的数字亲情伴侣。</div>
         </div>
     </div>
 
@@ -354,6 +380,23 @@
                 }, 2000);
             }).catch(err => {
                 console.error('无法复制文本: ', err);
+                // 降级处理：尝试使用 textarea
+                const textarea = document.createElement('textarea');
+                textarea.value = email;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    const tooltip = document.getElementById('copy-tooltip');
+                    tooltip.classList.add('show');
+                    setTimeout(() => {
+                        tooltip.classList.remove('show');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Fallback copy failed', err);
+                    alert('复制失败，请手动复制: ' + email);
+                }
+                document.body.removeChild(textarea);
             });
         }
 
@@ -380,7 +423,7 @@
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 1; // 缓慢流动
+                this.vx = (Math.random() - 0.5) * 1; 
                 this.vy = (Math.random() - 0.5) * 1;
                 this.size = Math.random() * 2 + 1;
                 this.alpha = Math.random() * 0.5 + 0.1;
@@ -394,12 +437,9 @@
                 // 简单的吸引力场，模拟牵手/汇聚
                 const dx = this.targetX - this.x;
                 const dy = this.targetY - this.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
                 
                 // 形成双中心引力场（模拟两个人）
                 const time = Date.now() * 0.001;
-                const center1X = width/2 - 50;
-                const center2X = width/2 + 50;
                 
                 // 粒子在中场流动
                 this.x += this.vx + Math.sin(this.y * 0.05 + time) * 0.5;
@@ -419,7 +459,7 @@
         }
 
         // 初始化粒子
-        for(let i=0; i<150; i++) {
+        for(let i=0; i<180; i++) { // 增加粒子数量
             particles.push(new Particle());
         }
 
